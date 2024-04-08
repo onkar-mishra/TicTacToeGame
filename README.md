@@ -1,1 +1,1 @@
-# TicTacToeGame
+# TicTacToeGame for Iphones and Ipad
