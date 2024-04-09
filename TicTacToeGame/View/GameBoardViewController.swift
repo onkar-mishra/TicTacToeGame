@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class GameBoardViewController: UIViewController {
     
     enum Turn {
         case Nought
@@ -25,6 +25,11 @@ class ViewController: UIViewController {
     @IBOutlet weak var btn_21: UIButton!
     @IBOutlet weak var btn_22: UIButton!
     
+    @IBOutlet weak var firstPlayerName: UILabel!
+    @IBOutlet weak var secondPlayerName: UILabel!
+    
+    @IBOutlet weak var mainStackView: UIStackView!
+    
     var firstTurn = Turn.Cross
     var currentTurn = Turn.Cross
     
@@ -35,11 +40,21 @@ class ViewController: UIViewController {
     var noughtsScore = 0
     var crossesScore = 0
     
+    var player1Name: String = ""
+    var player2Name: String = ""
+    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         initBoard()
+        applyGradient()
+        firstPlayerName.text = player1Name
+        secondPlayerName.text = player2Name
+        let allButtons = [btn_00, btn_01, btn_02, btn_10, btn_11, btn_12, btn_20, btn_21, btn_22]
+        allButtons.forEach { $0?.backgroundColor = .clear }
+        mainStackView.backgroundColor = .clear
+        
     }
     
     func initBoard() {
@@ -169,5 +184,20 @@ class ViewController: UIViewController {
                sender.isEnabled = false
            }
        }
+    
+    func applyGradient() {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = view.bounds
+        gradientLayer.colors = [
+            UIColor(red: 95/255, green: 61/255, blue: 125/255, alpha: 1.0).cgColor,
+            UIColor(red: 0/255, green: 97/255, blue: 128/255, alpha: 1.0).cgColor,
+            UIColor(red: 63/255, green: 106/255, blue: 74/255, alpha: 1.0).cgColor
+        ]
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
+        gradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
+        view.layer.insertSublayer(gradientLayer, at: 0)
+    }
+    
+    
    }
 
