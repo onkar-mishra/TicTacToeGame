@@ -9,95 +9,119 @@ import UIKit
 
 class PlayersNameViewController: UIViewController {
     
+    // MARK: - Outlets
+    
     @IBOutlet weak var player1Name: UITextField!
     @IBOutlet weak var player2Name: UITextField!
     @IBOutlet weak var boardSize: UITextField!
-    
     @IBOutlet weak var viewRoundHistoryButton: UIButton!
     @IBOutlet weak var pressHereToContinueButton: UIButton!
+    
+    // MARK: - View Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
         setupButtonState()
-        AppGradient().applyGradient(view: self.view)
-        
-        // Customize player1Name text field
-        customizeTextField(player1Name)
-        
-        // Customize player2Name text field
-        customizeTextField(player2Name)
-        
-        customizeTextField(boardSize)
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        // Reset text fields
-        player1Name.text = ""
-        player2Name.text = ""
-        boardSize.text = ""
-        
-        // Update button state
+        resetTextFields()
         setupButtonState()
+        updateViewRoundHistoryButtonVisibility()
     }
     
-    func customizeTextField(_ textField: UITextField) {
-        // Set background color to transparent
+    // MARK: - UI Setup
+    
+    private func setupUI() {
+        AppGradient().applyGradient(view: self.view)
+        customizeTextField(player1Name)
+        customizeTextField(player2Name)
+        customizeTextField(boardSize)
+    }
+    
+    private func customizeTextField(_ textField: UITextField) {
         textField.backgroundColor = .clear
-        
-        // Set font color to white
         textField.textColor = .white
-        
-        // Set placeholder text color to white
         textField.attributedPlaceholder = NSAttributedString(string: textField.placeholder ?? "", attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
-        
-        // Set border color to white
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.white.cgColor
-        
-        // Set corner radius
         textField.layer.cornerRadius = 8
     }
     
-    func setupButtonState() {
+    // MARK: - Button State
+    
+    private func setupButtonState() {
         pressHereToContinueButton.isEnabled = false
         player1Name.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         player2Name.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         boardSize.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
     
-    @objc func textFieldDidChange(_ textField: UITextField) {
-        // Update button state based on text fields' contents
+    @objc private func textFieldDidChange(_ textField: UITextField) {
         pressHereToContinueButton.isEnabled = isValidBoardSize(boardSize.text) && !(player1Name.text?.isEmpty ?? true) && !(player2Name.text?.isEmpty ?? true)
     }
     
-    func isValidBoardSize(_ text: String?) -> Bool {
+    private func isValidBoardSize(_ text: String?) -> Bool {
         guard let sizeString = text, let size = Int(sizeString) else {
             return false
         }
         return (3...10).contains(size)
     }
     
+    // MARK: - Actions
     
     @IBAction func pressHereToContinueButtonAction(_ sender: UIButton) {
-        guard let player1Name = player1Name.text, let player2Name = player2Name.text , let boardSize = boardSize.text else {
+        guard let player1Name = player1Name.text, let player2Name = player2Name.text, let boardSize = boardSize.text else {
             return
         }
-        if let gameBoardVC = storyboard?.instantiateViewController(withIdentifier: "GameBoardViewController") as? GameBoardViewController {
-            gameBoardVC.player1 = player1Name
-            gameBoardVC.player2 = player2Name
-            gameBoardVC.boardSize = Int(boardSize)
-            navigationController?.pushViewController(gameBoardVC, animated: true)
-        }
+        navigateToGameBoard(player1Name: player1Name, player2Name: player2Name, boardSize: boardSize)
     }
+    
     @IBAction func viewHistoryButtonAction(_ sender: Any) {
-        
-        guard let playersNameViewController = storyboard?.instantiateViewController(withIdentifier: "RoundHistoryViewController") as? RoundHistoryViewController else {
-            return
-        }
-        navigationController?.pushViewController(playersNameViewController, animated: true)
+        navigateToRoundHistory()
     }
     
-}
+    // MARK: - Navigation
     
+    private func navigateToGameBoard(player1Name: String, player2Name: String, boardSize: String) {
+        guard let gameBoardVC = storyboard?.instantiateViewController(withIdentifier: "GameBoardViewController") as? GameBoardViewController,
+              let size = Int(boardSize) else {
+            return
+        }
+        gameBoardVC.player1 = player1Name
+        gameBoardVC.player2 = player2Name
+        gameBoardVC.boardSize = size
+        navigationController?.pushViewController(gameBoardVC, animated: true)
+    }
+    
+    private func navigateToRoundHistory() {
+        guard let roundHistoryVC = storyboard?.instantiateViewController(withIdentifier: "RoundHistoryViewController") as? RoundHistoryViewController else {
+            return
+        }
+        navigationController?.pushViewController(roundHistoryVC, animated: true)
+    }
+    
+    // MARK: - Helper
+    
+    private func resetTextFields() {
+        player1Name.text = ""
+        player2Name.text = ""
+        boardSize.text = ""
+    }
+    
+    private func updateViewRoundHistoryButtonVisibility() {
+        // Fetch rounds from Core Data
+        let rounds = CoreDataManager.shared.fetchRounds()
+        
+        // Check if there are any rounds fetched
+        if rounds.isEmpty {
+            // No rounds fetched, hide the button
+            viewRoundHistoryButton.isHidden = true
+        } else {
+            // Rounds fetched, show the button
+            viewRoundHistoryButton.isHidden = false
+        }
+    }
+}

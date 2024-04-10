@@ -45,7 +45,7 @@ class GameBoardViewController: UIViewController {
         player2Name.text = player2
     }
     
-    func initBoard() {
+    private func initBoard() {
         let screenWidth = view.frame.width
         let totalPadding: CGFloat = 20 + 10 * CGFloat(boardSize! - 1) // Leading padding (10px) + trailing padding (10px) + padding between buttons
         let availableWidth = screenWidth - totalPadding
@@ -85,8 +85,7 @@ class GameBoardViewController: UIViewController {
         }
     }
 
-    
-    
+
     @objc func boardTapAction(_ sender: UIButton) {
         addToBoard(sender)
         
@@ -107,7 +106,7 @@ class GameBoardViewController: UIViewController {
     }
     
     
-    func checkForVictory(_ symbol: String) -> Bool {
+    private func checkForVictory(_ symbol: String) -> Bool {
         // Check rows for victory
         for row in 0..<boardSize! {
             var rowMatch = true
@@ -165,11 +164,12 @@ class GameBoardViewController: UIViewController {
     
     
     
-    func thisSymbol(_ button: UIButton, _ symbol: String) -> Bool {
+    private func thisSymbol(_ button: UIButton, _ symbol: String) -> Bool {
         return button.title(for: .normal) == symbol
     }
     
-    func resultAlert(title: String) {
+    
+    private func resultAlert(title: String) {
            winnerName = title
            let message = "\(title)"
            let ac = UIAlertController(title: message, message: nil, preferredStyle: .alert)
@@ -191,7 +191,7 @@ class GameBoardViewController: UIViewController {
        }
    
     
-    func fullBoard() -> Bool {
+    private func fullBoard() -> Bool {
         for button in boardButtons {
             if button.title(for: .normal) == nil {
                 return false
@@ -200,7 +200,8 @@ class GameBoardViewController: UIViewController {
         return true
     }
     
-    func addToBoard(_ sender: UIButton) {
+    
+    private func addToBoard(_ sender: UIButton) {
         if sender.title(for: .normal) == nil {
             // Set button title based on current turn
             sender.setTitle((currentTurn == .nought) ? NOUGHT : CROSS, for: .normal)
@@ -210,7 +211,8 @@ class GameBoardViewController: UIViewController {
         }
     }
     
-    func saveGameState() {
+    
+    private func saveGameState() {
         // Determine the winner based on the current game state
         let winner = winnerName ?? ""
         

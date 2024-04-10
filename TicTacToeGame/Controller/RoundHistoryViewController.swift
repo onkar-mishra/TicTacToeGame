@@ -42,7 +42,6 @@ class RoundHistoryViewController: UIViewController {
     
     
     // Function to fetch rounds from Core Data
-    // Function to fetch rounds from Core Data
     func fetchRounds() {
         let fetchRequest: NSFetchRequest<RoundHistory> = RoundHistory.fetchRequest()
         

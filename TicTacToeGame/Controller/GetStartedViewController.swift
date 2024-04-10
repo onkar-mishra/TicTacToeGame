@@ -13,14 +13,20 @@ class GetStartedViewController: UIViewController {
     @IBOutlet weak var exitButton: UIButton!
     
     
+    // MARK: - View Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
+    }
+    
+    // MARK: - UI Setup
+    
+    private func setupUI() {
         applyAppGradient()
         applyBorderAndShadow(to: getStaredButton)
         applyBorderAndShadow(to: exitButton)
     }
-    
-    // MARK: - UI Setup Methods
     
     private func applyAppGradient() {
         AppGradient().applyGradient(view: self.view)
@@ -36,6 +42,7 @@ class GetStartedViewController: UIViewController {
         button.layer.shadowRadius = 4
     }
     
+    // MARK: - Actions
     
     @IBAction func getStartedButtonTapped(_ sender: UIButton) {
         
