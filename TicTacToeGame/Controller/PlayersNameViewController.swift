@@ -13,6 +13,7 @@ class PlayersNameViewController: UIViewController {
     @IBOutlet weak var player2Name: UITextField!
     @IBOutlet weak var boardSize: UITextField!
     
+    @IBOutlet weak var viewRoundHistoryButton: UIButton!
     @IBOutlet weak var pressHereToContinueButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,6 +90,13 @@ class PlayersNameViewController: UIViewController {
             gameBoardVC.boardSize = Int(boardSize)
             navigationController?.pushViewController(gameBoardVC, animated: true)
         }
+    }
+    @IBAction func viewHistoryButtonAction(_ sender: Any) {
+        
+        guard let playersNameViewController = storyboard?.instantiateViewController(withIdentifier: "RoundHistoryViewController") as? RoundHistoryViewController else {
+            return
+        }
+        navigationController?.pushViewController(playersNameViewController, animated: true)
     }
     
 }

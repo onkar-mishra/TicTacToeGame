@@ -17,6 +17,8 @@
 		39415EBE2BC531BF0033AE5E /* GetStartedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39415EBD2BC531BF0033AE5E /* GetStartedViewController.swift */; };
 		39415EC02BC536570033AE5E /* PlayersNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39415EBF2BC536570033AE5E /* PlayersNameViewController.swift */; };
 		39415EC32BC66E290033AE5E /* AppGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39415EC22BC66E290033AE5E /* AppGradient.swift */; };
+		39415EED2BC69B140033AE5E /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39415EEC2BC69B140033AE5E /* CoreDataManager.swift */; };
+		39415EEF2BC6A70E0033AE5E /* RoundHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39415EEE2BC6A70E0033AE5E /* RoundHistoryViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		39415EBD2BC531BF0033AE5E /* GetStartedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStartedViewController.swift; sourceTree = "<group>"; };
 		39415EBF2BC536570033AE5E /* PlayersNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayersNameViewController.swift; sourceTree = "<group>"; };
 		39415EC22BC66E290033AE5E /* AppGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGradient.swift; sourceTree = "<group>"; };
+		39415EEC2BC69B140033AE5E /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		39415EEE2BC6A70E0033AE5E /* RoundHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundHistoryViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +68,7 @@
 		39415EA42BC3CBC40033AE5E /* TicTacToeGame */ = {
 			isa = PBXGroup;
 			children = (
+				39415EEA2BC69AF20033AE5E /* Utils */,
 				39415EC62BC681920033AE5E /* Controller */,
 				39415EC52BC681750033AE5E /* Resources */,
 				39415EC42BC6814D0033AE5E /* App Delegate */,
@@ -115,8 +120,25 @@
 				39415EBF2BC536570033AE5E /* PlayersNameViewController.swift */,
 				39415EBD2BC531BF0033AE5E /* GetStartedViewController.swift */,
 				39415EA92BC3CBC40033AE5E /* GameBoardViewController.swift */,
+				39415EEE2BC6A70E0033AE5E /* RoundHistoryViewController.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		39415EEA2BC69AF20033AE5E /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				39415EEB2BC69AF90033AE5E /* Manager */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		39415EEB2BC69AF90033AE5E /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				39415EEC2BC69B140033AE5E /* CoreDataManager.swift */,
+			);
+			path = Manager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -196,7 +218,9 @@
 				39415EAA2BC3CBC40033AE5E /* GameBoardViewController.swift in Sources */,
 				39415EA62BC3CBC40033AE5E /* AppDelegate.swift in Sources */,
 				39415EA82BC3CBC40033AE5E /* SceneDelegate.swift in Sources */,
+				39415EED2BC69B140033AE5E /* CoreDataManager.swift in Sources */,
 				39415EBE2BC531BF0033AE5E /* GetStartedViewController.swift in Sources */,
+				39415EEF2BC6A70E0033AE5E /* RoundHistoryViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -344,7 +368,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = TicTacToeGame/Info.plist;
+				INFOPLIST_FILE = TicTacToeGame/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -374,7 +398,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = TicTacToeGame/Info.plist;
+				INFOPLIST_FILE = TicTacToeGame/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

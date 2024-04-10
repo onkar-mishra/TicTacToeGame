@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 
 class GameBoardViewController: UIViewController {
@@ -28,7 +29,9 @@ class GameBoardViewController: UIViewController {
     
     var player1: String = ""
     var player2: String = ""
+    var winnerName: String?
     var boardSize: Int?
+    
     
     let NOUGHT = "O"
     let CROSS = "X"
@@ -48,8 +51,13 @@ class GameBoardViewController: UIViewController {
         let availableWidth = screenWidth - totalPadding
         let buttonSize = availableWidth / CGFloat(boardSize!)
         
-        let topSpacePercentage: CGFloat = 0.3
+        var topSpacePercentage: CGFloat = 0.3
         let bottomPadding: CGFloat = 20
+        
+        // Check if the device is an iPad
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            topSpacePercentage = 0.25 // Adjust this value as needed for iPad
+        }
         
         let topSpace = view.frame.height * topSpacePercentage
         _ = view.frame.height - topSpace - bottomPadding
@@ -76,6 +84,7 @@ class GameBoardViewController: UIViewController {
             }
         }
     }
+
     
     
     @objc func boardTapAction(_ sender: UIButton) {
@@ -161,27 +170,26 @@ class GameBoardViewController: UIViewController {
     }
     
     func resultAlert(title: String) {
-        let message = "\(title)"
-        let ac = UIAlertController(title: message, message: nil, preferredStyle: .alert)
-        
-        let resetAction = UIAlertAction(title: "OK", style: .default) { [weak self] (_) in
-            
-            if let navigationController = self?.navigationController {
-                navigationController.popViewController(animated: true)
-            }
-        }
-        
-        let saveAction = UIAlertAction(title: "Save", style: .default) { (_) in
-            // Add code to save the game state
-        }
-        
-        ac.addAction(resetAction)
-        ac.addAction(saveAction)
-        
-        present(ac, animated: true)
-    }
-
-
+           winnerName = title
+           let message = "\(title)"
+           let ac = UIAlertController(title: message, message: nil, preferredStyle: .alert)
+           
+           let resetAction = UIAlertAction(title: "OK", style: .default) { [weak self] (_) in
+               if let navigationController = self?.navigationController {
+                   navigationController.popViewController(animated: true)
+               }
+           }
+           
+           let saveAction = UIAlertAction(title: "Save", style: .default) { (_) in
+               self.saveGameState()
+           }
+           
+           ac.addAction(resetAction)
+           ac.addAction(saveAction)
+           
+           present(ac, animated: true)
+       }
+   
     
     func fullBoard() -> Bool {
         for button in boardButtons {
@@ -201,4 +209,25 @@ class GameBoardViewController: UIViewController {
             sender.isEnabled = false
         }
     }
+    
+    func saveGameState() {
+        // Determine the winner based on the current game state
+        let winner = winnerName ?? ""
+        
+        // Prepare parameters to save
+        let parameters = ParametersToSave(player1: player1, player2: player2, winner: winner)
+        
+        // Save the game state
+        CoreDataManager.shared.save(parameters: parameters)
+        if let navigationController = self.navigationController {
+            navigationController.popViewController(animated: true)
+        }
+    }
+}
+
+
+struct ParametersToSave {
+    let player1: String
+    let player2: String
+    let winner: String
 }
