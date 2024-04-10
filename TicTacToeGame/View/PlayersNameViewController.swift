@@ -59,8 +59,8 @@ class PlayersNameViewController: UIViewController {
                     return
                 }
                 if let gameBoardVC = storyboard?.instantiateViewController(withIdentifier: "GameBoardViewController") as? GameBoardViewController {
-                    gameBoardVC.player1Name = player1Name
-                    gameBoardVC.player2Name = player2Name
+//                    gameBoardVC.player1Name = player1Name
+//                    gameBoardVC.player2Name = player2Name
                     navigationController?.pushViewController(gameBoardVC, animated: true)
                 }
             }
