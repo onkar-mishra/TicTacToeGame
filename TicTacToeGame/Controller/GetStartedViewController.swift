@@ -7,16 +7,29 @@
 
 import UIKit
 
+<<<<<<< HEAD
 class GetStartedViewController: UIViewController {
     
     @IBOutlet weak var getStaredButton: UIButton!
     @IBOutlet weak var exitButton: UIButton!
     
+=======
+final class GetStartedViewController: UIViewController {
+    
+    // MARK: - Outlets
+    
+    @IBOutlet private weak var getStaredButton: TicToeButton!
+    @IBOutlet private weak var exitButton: TicToeButton!
+    
+    // MARK: - Properties
+    private var coordinator: GetStartedCoordinator?
+>>>>>>> dev
     
     // MARK: - View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+<<<<<<< HEAD
         setupUI()
     }
     
@@ -66,5 +79,23 @@ class GetStartedViewController: UIViewController {
     
     private func exitApplication() {
         exit(0)
+=======
+        coordinator = GetStartedCoordinator(navigationController)
+        setupSubviews()
+    }
+    // MARK: - Private Methods
+    
+    private func setupSubviews() {
+        view.applyGradient()
+    }
+    // MARK: - Actions
+    
+    @IBAction private func onGetStartedTapped(_ sender: UIButton) {
+        coordinator?.navigateToBoard()
+    }
+    
+    @IBAction private func onExitTapped(_ sender: UIButton) {
+        coordinator?.exitGame()
+>>>>>>> dev
     }
 }
